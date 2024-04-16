@@ -5,7 +5,6 @@ from flask import Blueprint, request, jsonify, current_app, Response, session
 from flask_restful import Api, Resource
 from datetime import datetime
 from auth_middleware import token_required
-from ast import literal_eval
 import json
 
 user_api = Blueprint('user_api', __name__, url_prefix='/api/users')

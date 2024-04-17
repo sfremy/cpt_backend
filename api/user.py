@@ -5,7 +5,7 @@ from flask import Blueprint, request, jsonify, current_app, Response, session
 from flask_restful import Api, Resource
 from datetime import datetime
 from auth_middleware import token_required
-import json
+import ast
 
 user_api = Blueprint('user_api', __name__, url_prefix='/api/users')
 api = Api(user_api)
@@ -70,6 +70,7 @@ class UserAPI:
             # Retrieve the user's ID from the session to identify the user making the request
             #username = session.get('uid')
             username = 'toby'
+            
             # Query the database for the user's record using the user ID
             user = User.query.filter_by(_uid=username).first()
             
@@ -77,7 +78,8 @@ class UserAPI:
                 return {'message': "Invalid user id"}, 400
             
             # Decode the JSON string of the user's college list into a Python list
-            namelist = json.loads(user.college_list)
+            namelist = ast.literal_eval(user.read()['college_list'])
+            
             # Query the database for colleges that match the names in the user's list
             matching_colleges = College.query.filter(College._name.in_(namelist)).all()
             # Convert the query results to a JSON-serializable format
@@ -99,7 +101,9 @@ class UserAPI:
         # PUT method to update the college list associated with a user
         def put(self):
             # Retrieve the user's ID from the session
-            username = session.get('uid')
+            #username = session.get('uid')
+            username = 'toby'
+            
             # Query the database for the user's record
             user = User.query.filter_by(_uid=username).first()
             
@@ -107,14 +111,17 @@ class UserAPI:
                 return {'message': "Invalid user id"}, 400
             
             # Decode the JSON string of the user's current college list into a Python list
-            namelist = json.loads(user.college_list)
+            namelist = ast.literal_eval(user.read()['college_list'])
+            
             # Extract data from the request's JSON body
             body = request.get_json()
+            
             # Get the list of college names from the request data
             selected_names = body.get('names', [])
             
             # Update the user's college list by adding new names, avoiding duplicates
             namelist += [elem for elem in selected_names if elem not in namelist]
+            
             # Update the user's record in the database with the new college list
             user.update_list(json.dumps(namelist))
 

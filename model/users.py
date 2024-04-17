@@ -109,7 +109,7 @@ class User(db.Model):
             "dob": self.dob,
             "age": self.age,
             "email": self.email,
-            "colleges": self.college_list
+            "college_list": self.college_list
         }
 
     def update(self, name="", uid="", password="",email=""):

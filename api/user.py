@@ -125,7 +125,6 @@ class UserAPI:
             
             # Update the user's record in the database with the new college list
             user.update(college_list=json.dumps(namelist))
-            print(user.read()['college_list'])
 
     class _Security(Resource):
         def post(self):

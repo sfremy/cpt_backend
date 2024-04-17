@@ -6,6 +6,7 @@ from flask_restful import Api, Resource
 from datetime import datetime
 from auth_middleware import token_required
 import ast
+import json
 
 user_api = Blueprint('user_api', __name__, url_prefix='/api/users')
 api = Api(user_api)
@@ -123,7 +124,8 @@ class UserAPI:
             namelist += [elem for elem in selected_names if elem not in namelist]
             
             # Update the user's record in the database with the new college list
-            user.update_list(json.dumps(namelist))
+            user.update(college_list=json.dumps(namelist))
+            print(user.read()['college_list'])
 
     class _Security(Resource):
         def post(self):

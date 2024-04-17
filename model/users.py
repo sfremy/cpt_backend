@@ -112,7 +112,7 @@ class User(db.Model):
             "college_list": self.college_list
         }
 
-    def update(self, name="", uid="", password="",email=""):
+    def update(self, name="", uid="", password="",email="",college_list=""):
         """only updates values with length"""
         if len(name) > 0:
             self.name = name
@@ -122,6 +122,8 @@ class User(db.Model):
             self.set_password(password)
         if len(email) > 0:
             self.email = email
+        if len(college_list) > 0:
+            self.college_list = college_list
         db.session.add(self) 
         db.session.commit()
         return self

@@ -12,14 +12,14 @@ class College(db.Model):
     __tablename__ = 'colleges'  # table name is plural, class name is singular
 
     # Define the Player schema with "vars" from object
-    _name = db.Column(db.String(255), unique=True, nullable=False, primary_key=True)
-    _link = db.Column(db.String(255), unique=True, nullable=False)
+    _name = db.Column(db.String(255), unique=False, nullable=True)
+    _link = db.Column(db.String(255), nullable=False, primary_key=True)
     _image = db.Column(db.String(255), unique=False, nullable=True)
     
-    def __init__(self, name, link, image):
+    def __init__(self, name, link, img):
         self._name = name    # variables with self prefix become part of the object, 
         self._link = link
-        self._image = image
+        self._image = img
 
     # a name getter method, extracts name from object
     @property
@@ -44,8 +44,8 @@ class College(db.Model):
         return self._image
     
     @image.setter
-    def image(self, image):
-        self._image = image
+    def image(self, img):
+        self._image = img
     
     # output content using str(object) in human readable form, uses getter
     # output content using json dumps, this is ready for API response
@@ -100,7 +100,7 @@ class College(db.Model):
 
 
 # Builds working data for testing
-def initPlayers():
+def initColleges():
     with app.app_context():
         db.create_all()
         c1 = College(name='Stanford University',link='https://admission.stanford.edu/apply/',img='https://identity.stanford.edu/wp-content/uploads/sites/3/2020/07/block-s-right.png')

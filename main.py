@@ -5,6 +5,7 @@ from __init__ import app, db
 
 from api.user import user_api
 from model.users import User
+from model.colleges import initColleges
 
 # Create CORS instance before registering blueprint
 cors = CORS(app, supports_credentials=True)
@@ -28,7 +29,7 @@ def initUsers():
         """Create database and tables"""
         db.create_all()
         """Tester data for table"""
-        u1 = User(name='Thomas Edison', uid='toby', email="123@123.com", password='123toby', dob=datetime(1847, 2, 11))
+        u1 = User(name='Thomas Edison', uid='toby', email="123@123.com", password='123toby', dob=datetime(1847, 2, 11),college_list='[\'Stanford University\', \'MIT\']')
         u2 = User(name='Nikola Tesla', uid='niko', email="123@123.com", password='123niko')
         u3 = User(name='Alexander Graham Bell', uid='lex', email="123@123.com", password='123lex')
         u4 = User(name='Eli Whitney', uid='whit', email="123@123.com", password='123whit')
@@ -115,6 +116,8 @@ def read():
         
 # create()                
 initUsers()
+initColleges()
+
 
 # resp.set_cookie(
 #     "jwt",

@@ -68,7 +68,8 @@ class UserAPI:
         # POST method to add new colleges to a user's list
         def post(self):
             # Retrieve the user's ID from the session to identify the user making the request
-            username = session.get('uid')
+            #username = session.get('uid')
+            username = 'toby'
             # Query the database for the user's record using the user ID
             user = User.query.filter_by(_uid=username).first()
             
@@ -78,7 +79,7 @@ class UserAPI:
             # Decode the JSON string of the user's college list into a Python list
             namelist = json.loads(user.college_list)
             # Query the database for colleges that match the names in the user's list
-            matching_colleges = College.query.filter(College.name.in_(namelist)).all()
+            matching_colleges = College.query.filter(College._name.in_(namelist)).all()
             # Convert the query results to a JSON-serializable format
             colleges_data = [college.read() for college in matching_colleges]
             json_data = jsonify(colleges_data)

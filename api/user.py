@@ -68,9 +68,14 @@ class UserAPI:
     class _Edit(Resource):
         # POST method to add new colleges to a user's list
         def post(self):
-            # Retrieve the user's ID from the session to identify the user making the request
-            #username = session.get('uid')
-            username = 'toby'
+            # Extract data from the request's JSON body
+            body = request.get_json()
+            
+            if body is None:
+                return {'message': 'Invalid request'}, 400
+            
+            # Retrieve the user's ID
+            username = body.get('name')
             
             # Query the database for the user's record using the user ID
             user = User.query.filter_by(_uid=username).first()
@@ -83,8 +88,10 @@ class UserAPI:
             
             # Query the database for colleges that match the names in the user's list
             matching_colleges = College.query.filter(College._name.in_(namelist)).all()
+            
             # Convert the query results to a JSON-serializable format
             colleges_data = [college.read() for college in matching_colleges]
+            print(colleges_data)
             json_data = jsonify(colleges_data)
             
             return json_data  # Return the JSON data of the colleges
@@ -101,9 +108,11 @@ class UserAPI:
 
         # PUT method to update the college list associated with a user
         def put(self):
-            # Retrieve the user's ID from the session
-            #username = session.get('uid')
-            username = 'toby'
+            # Extract data from the request's JSON body
+            body = request.get_json()
+            
+            # Retrieve the user's ID
+            username = body.get('name')
             
             # Query the database for the user's record
             user = User.query.filter_by(_uid=username).first()
@@ -114,8 +123,6 @@ class UserAPI:
             # Decode the JSON string of the user's current college list into a Python list
             namelist = ast.literal_eval(user.read()['college_list'])
             
-            # Extract data from the request's JSON body
-            body = request.get_json()
             
             # Get the list of college names from the request data
             selected_names = body.get('names', [])

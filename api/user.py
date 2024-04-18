@@ -71,17 +71,17 @@ class UserAPI:
             # Extract data from the request's JSON body
             body = request.get_json()
             
-            if body is None:
-                return {'message': 'Invalid request'}, 400
-            
             # Retrieve the user's ID
             username = body.get('name')
+            
+            if username is None:
+                return {'message': 'Invalid request'}, 400
             
             # Query the database for the user's record using the user ID
             user = User.query.filter_by(_uid=username).first()
             
             if user is None:
-                return {'message': "Invalid user id"}, 400
+                return {'message': "User ID not found"}, 404
             
             # Decode the JSON string of the user's college list into a Python list
             namelist = ast.literal_eval(user.read()['college_list'])
@@ -118,7 +118,7 @@ class UserAPI:
             user = User.query.filter_by(_uid=username).first()
             
             if user is None:
-                return {'message': "Invalid user id"}, 400
+                return {'message': "User ID not found"}, 404
             
             # Decode the JSON string of the user's current college list into a Python list
             namelist = ast.literal_eval(user.read()['college_list'])
@@ -132,6 +132,8 @@ class UserAPI:
             
             # Update the user's record in the database with the new college list
             user.update(college_list=json.dumps(namelist))
+            
+            return {'message': "User list updated"}
 
     class _Security(Resource):
         def post(self):

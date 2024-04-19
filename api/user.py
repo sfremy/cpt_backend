@@ -193,7 +193,7 @@ class UserAPI:
                     "message": "Something went wrong!",
                     "error": str(e),
                     "data": None
-                }, 500
+                }, 400
 
     api.add_resource(_CRUD, '/')
     api.add_resource(_Security, '/authenticate')

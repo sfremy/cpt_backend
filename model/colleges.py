@@ -12,8 +12,9 @@ class College(db.Model):
     __tablename__ = 'colleges'  # table name is plural, class name is singular
 
     # Define the Player schema with "vars" from object
+    id = db.Column(db.Integer, primary_key=True)
     _name = db.Column(db.String(255), unique=False, nullable=True)
-    _link = db.Column(db.String(255), nullable=False, primary_key=True)
+    _link = db.Column(db.String(255), unique=False, nullable=True)
     _image = db.Column(db.String(255), unique=False, nullable=True)
     
     def __init__(self, name, link, img):
@@ -68,6 +69,7 @@ class College(db.Model):
     # returns dictionary
     def read(self):
         return {
+            "id": self.id,
             "name": self.name,
             "link": self.link,
             "image": self.image

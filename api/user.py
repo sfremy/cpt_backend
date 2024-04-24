@@ -147,7 +147,33 @@ class UserAPI:
             # Update the user's record in the database with the new college list
             user.update(college_list=json.dumps(namelist))
             
-            return {'message': "User list updated"}
+            return {
+            'message': "User list updated",
+            'id': user.id,
+            'college_list': namelist
+        }
+            
+        # def get(self):
+        # # Extract data from the request's JSON body
+        #     body = request.args.to_dict()
+            
+        #     # Retrieve the user's name (uid)
+        #     user_id = body.get('id')
+            
+        #     if user_id is None:
+        #         return {'message': 'Invalid request'}, 400
+            
+        #     # Query the database for the user's record using the user ID
+        #     user = User.query.filter_by(id=user_id).first()
+            
+        #     if user is None:
+        #         return {'message': "User ID not found"}, 404
+            
+        #     # Return the user's ID
+        #     return {
+        #         'message': "User ID found",
+        #         'id': user.id
+        #     }
         
     class _Security(Resource):
         def post(self):

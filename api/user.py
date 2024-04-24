@@ -1,15 +1,19 @@
 import jwt
 from model.users import User
 from model.colleges import College
-from flask import Blueprint, request, jsonify, current_app, Response, session
+from flask import Flask, Blueprint, request, jsonify, current_app, Response, session
 from flask_restful import Api, Resource
 from datetime import datetime
 from auth_middleware import token_required
 import ast
 import json
+from flask_cors import CORS
 
 user_api = Blueprint('user_api', __name__, url_prefix='/api/users')
 api = Api(user_api)
+
+app = Flask(__name__)
+CORS(app, origins="*")
 
 class UserAPI:
     class _CRUD(Resource):
@@ -108,33 +112,43 @@ class UserAPI:
 
         # PUT method to update the college list associated with a user
         def put(self):
-            # Extract data from the request's JSON body
+        # Extract data from the request's JSON body
             body = request.get_json()
             
+            # Print request data for debugging
+            print("Request Data:", body)
+            
             # Retrieve the user's ID
-            username = body.get('name')
+            user_id = body.get('id')
+            
+            # DEBUG
+            print("User ID:", user_id)
             
             # Query the database for the user's record
-            user = User.query.filter_by(_uid=username).first()
+            user = User.query.filter_by(id=user_id).first()
+            
+            # DEBUG
+            print("User:", user)
             
             if user is None:
                 return {'message': "User ID not found"}, 404
             
-            # Decode the JSON string of the user's current college list into a Python list
-            namelist = ast.literal_eval(user.read()['college_list'])
-            
-            
             # Get the list of college names from the request data
-            selected_names = body.get('names', [])
+            selected_colleges = body.get('college_list', [])
+            
+            # Decode the JSON string of the user's current college list into a Python list
+            namelist = ast.literal_eval(user.college_list)
+            
+            print("Existing College List:", namelist) # DEBUG
             
             # Update the user's college list by adding new names, avoiding duplicates
-            namelist += [elem for elem in selected_names if elem not in namelist]
+            namelist += [college for college in selected_colleges if college not in namelist]
             
             # Update the user's record in the database with the new college list
             user.update(college_list=json.dumps(namelist))
             
             return {'message': "User list updated"}
-
+        
     class _Security(Resource):
         def post(self):
             try:

@@ -6,6 +6,7 @@ from flask_restful import Api, Resource
 from datetime import datetime
 from auth_middleware import token_required
 import ast
+from datamodel import datamodel
 import json
 from flask_cors import CORS
 
@@ -252,7 +253,28 @@ class UserAPI:
                     "data": None
                 }, 400
                 
+    class Prediction(Resource):
+        def post(self):
+            try:
+                body = request.get_json()
+                # Convert input data to numeric format
+                gpa = float(body.get('gpa'))
+                SAT = int(body.get('SAT'))
+                Extracurricular_Activities = int(body.get('Extracurricular_Activities'))
+                Model = datamodel()
+                Model.training()
+                prediction_result = Model.predict(gpa, SAT, Extracurricular_Activities)
+                return jsonify(prediction_result)
+            except Exception as e:
+                print("Prediction error:", str(e))  # Log the error
+                return {
+                    "message": "Something went wrong during prediction!",
+                    "error": str(e),
+                    "data": None
+                }, 500
+                
 
     api.add_resource(_CRUD, '/')
     api.add_resource(_Security, '/authenticate')
     api.add_resource(_Edit, '/edit')
+    api.add_resource(Prediction, '/Prediction')

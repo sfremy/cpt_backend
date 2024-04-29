@@ -99,7 +99,7 @@ class UserAPI:
             json_data = jsonify(colleges_data)
             
             return json_data  # Return the JSON data of the colleges
-
+        
         # GET method to retrieve a list of all colleges from the database
         def get(self):
             # Query the database for all college records
@@ -109,7 +109,7 @@ class UserAPI:
             json_data = jsonify(colleges_data)
             
             return json_data  # Return the JSON data of all colleges
-
+        
         # PUT method to update the college list associated with a user
         def put(self):
         # Extract data from the request's JSON body
@@ -153,28 +153,45 @@ class UserAPI:
             'college_list': namelist
         }
             
-        # def get(self):
-        # # Extract data from the request's JSON body
-        #     body = request.args.to_dict()
+        # NEW STUFF
+    
+        def delete(current_user): # To delete colleges from the list
+            # Extract data from the request's JSON body
+            body = request.get_json()
+                    
+            # Retrieve the user's ID
+            username = body.get('name')
+                        
+            if username is None:
+                return {'message': 'Invalid request'}, 400
+                        
+            # Query the database for the user's record using the user ID
+            user = User.query.filter_by(_uid=username).first()
+                        
+            if user is None:
+                return {'message': "User ID not found"}, 404
             
-        #     # Retrieve the user's name (uid)
-        #     user_id = body.get('id')
-            
-        #     if user_id is None:
-        #         return {'message': 'Invalid request'}, 400
-            
-        #     # Query the database for the user's record using the user ID
-        #     user = User.query.filter_by(id=user_id).first()
-            
-        #     if user is None:
-        #         return {'message': "User ID not found"}, 404
-            
-        #     # Return the user's ID
-        #     return {
-        #         'message': "User ID found",
-        #         'id': user.id
-        #     }
-        
+            # selected_colleges = body.get('college_list', [])
+            selected_colleges = json.loads(user.college_list)
+            colleges_to_delete = body.get('names')
+                    
+            if not colleges_to_delete:
+                return {'message': 'No colleges to delete provided'}, 400
+
+            # Iterate through the colleges to delete and remove them from the user's selection list
+            for college_to_delete in colleges_to_delete:
+                if college_to_delete in selected_colleges:
+                    selected_colleges.remove(college_to_delete)
+
+            # Update the user's record in the database with the updated selection list
+            user.update(college_list=json.dumps(selected_colleges))
+
+            # Commit changes to the database
+            # db.session.commit()
+
+            return {'message': 'Colleges deleted successfully'}, 200
+
+
     class _Security(Resource):
         def post(self):
             try:
@@ -234,6 +251,7 @@ class UserAPI:
                     "error": str(e),
                     "data": None
                 }, 400
+                
 
     api.add_resource(_CRUD, '/')
     api.add_resource(_Security, '/authenticate')

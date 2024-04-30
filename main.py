@@ -5,7 +5,7 @@ from __init__ import app, db
 
 from api.user import user_api
 from model.users import User
-from model.colleges import initColleges
+from model.colleges import College
 
 # Create CORS instance before registering blueprint
 cors = CORS(app, supports_credentials=True)
@@ -49,6 +49,33 @@ def initUsers():
                 '''fails with bad or duplicate data'''
                 print(f"Records exist uid {user.uid}, or error.")
 
+def initColleges():
+    with app.app_context():
+        db.create_all()
+        c1 = College(name='Stanford University',link='https://admission.stanford.edu/apply/',image='https://identity.stanford.edu/wp-content/uploads/sites/3/2020/07/block-s-right.png')
+        c2 = College(name='Harvard University',link='https://college.harvard.edu/admissions/apply',image='https://1000logos.net/wp-content/uploads/2017/02/Harvard-Logo.png')
+        c3 = College(name='MIT',link='https://apply.mitadmissions.org/portal/apply',image='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/MIT_logo.svg/2560px-MIT_logo.svg.png')
+        c4 = College(name='Georgia Tech',link='https://admission.gatech.edu/apply/',image='https://brand.gatech.edu/sites/default/files/inline-images/GTVertical_RGB.png')
+        c5 = College(name='Duke University',link='https://admissions.duke.edu/apply/',image='https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Duke_Blue_Devils_logo.svg/909px-Duke_Blue_Devils_logo.svg.png')
+        c6 = College(name='Yale University',link='https://www.yale.edu/admissions',image='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Yale_University_logo.svg/2560px-Yale_University_logo.svg.png')
+        c7 = College(name='Princeton University',link='https://admission.princeton.edu/apply',image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Princeton_seal.svg/1200px-Princeton_seal.svg.png')
+        c8 = College(name='Columbia University',link='https://undergrad.admissions.columbia.edu/apply',image='https://admissions.ucr.edu/sites/default/files/styles/form_preview/public/2020-07/ucr-education-logo-columbia-university.png?itok=-0FD6Ma2')
+        c9 = College(name='University of Chicago',link='https://collegeadmissions.uchicago.edu/apply',image='https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chicago_Coat_of_arms.png')
+        c10 = College(name='UC Berkeley',link='https://admissions.berkeley.edu/apply-to-berkeley/',image='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Seal_of_University_of_California%2C_Berkeley.svg/1200px-Seal_of_University_of_California%2C_Berkeley.svg.png')
+        c11 = College(name='UCLA',link='https://admission.ucla.edu/apply',image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/UCLA_Bruins_primary_logo.svg/1200px-UCLA_Bruins_primary_logo.svg.png')
+        #Add new data to this line
+        
+        colleges = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11]
+
+        """Builds sample user/note(s) data"""
+        for college in colleges:
+            try:
+                '''add user to table'''
+                object = college.create()
+                print(f"Created new uid {object.id}")
+            except:  # error raised if object nit created
+                '''fails with bad or duplicate data'''
+                print(f"Records exist uid {college.id}, or error.")
 
 # SQLAlchemy extracts single user from database matching User ID
 def find_by_uid(uid):
@@ -115,8 +142,8 @@ def read():
 # read()
         
 # create()                
-initUsers()
-initColleges()
+# initUsers()
+# initColleges()
 
 
 # resp.set_cookie(

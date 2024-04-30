@@ -154,7 +154,7 @@ class UserAPI:
             'college_list': namelist
         }
             
-        # NEW STUFF
+        # NEW STUFF - DELETE COLLEGES FROM LIST
     
         def delete(current_user): # To delete colleges from the list
             # Extract data from the request's JSON body
@@ -172,10 +172,11 @@ class UserAPI:
             if user is None:
                 return {'message': "User ID not found"}, 404
             
-            # selected_colleges = body.get('college_list', [])
+            # Key variable definitions
+            original_colleges = json.loads(user.college_list)
             selected_colleges = json.loads(user.college_list)
             colleges_to_delete = body.get('names')
-                    
+            
             if not colleges_to_delete:
                 return {'message': 'No colleges to delete provided'}, 400
 
@@ -186,11 +187,16 @@ class UserAPI:
 
             # Update the user's record in the database with the updated selection list
             user.update(college_list=json.dumps(selected_colleges))
-
+            
             # Commit changes to the database
             # db.session.commit()
 
-            return {'message': 'Colleges deleted successfully'}, 200
+            return {
+            'message': 'Colleges deleted successfully!',
+            'original_college_list': original_colleges,
+            'colleges_to_delete': colleges_to_delete,
+            'resulting_college_list': selected_colleges
+        }, 200
 
 
     class _Security(Resource):

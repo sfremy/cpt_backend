@@ -10,8 +10,8 @@ class datamodel:
         self.model.fit(self.X,self.Y)
         
         
-    def predict(self, GPA, SAT_SCORE, EXTRACIRICULAR): # this is prediciton function
-        return self.model.predict([[GPA, SAT_SCORE, EXTRACIRICULAR]])[0]
+    def predict(self, GPA, SAT_SCORE, EXTRACURRICULAR): # Prediction function
+        return self.model.predict([[GPA, SAT_SCORE, EXTRACURRICULAR]])[0]
     
     
     def create(self, new_data):

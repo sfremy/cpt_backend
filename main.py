@@ -29,12 +29,12 @@ def initUsers():
         """Create database and tables"""
         db.create_all()
         """Tester data for table"""
-        u1 = User(name='Thomas Edison', uid='toby', email="123@123.com", password='123toby', dob=datetime(1847, 2, 11),college_list='[\'Stanford University\', \'MIT\']')
-        u2 = User(name='Nikola Tesla', uid='niko', email="123@123.com", password='123niko')
-        u3 = User(name='Alexander Graham Bell', uid='lex', email="123@123.com", password='123lex')
-        u4 = User(name='Eli Whitney', uid='whit', email="123@123.com", password='123whit')
-        u5 = User(name='Indiana Jones', uid='indi', email="123@123.com", dob=datetime(1920, 10, 21))
-        u6 = User(name='Marion Ravenwood', uid='raven', email="123@123.com", dob=datetime(1921, 10, 21))
+        u1 = User(name='Lionel Messi', uid='lmessi', email="123@123.com", password='goat', dob=datetime(1847, 2, 11),college_list='[\'Stanford University\', \'MIT\']')
+        u2 = User(name='Cristiano Ronaldo', uid='cr7', email="123@123.com", password='123cr7')
+        u3 = User(name='Kevin De Bruyne', uid='kdb', email="123@123.com", password='123kdb')
+        u4 = User(name='Phil Foden', uid='foden', email="123@123.com", password='123foden')
+        u5 = User(name='Rodrigo Hernández', uid='rodri', email="123@123.com", dob=datetime(1920, 10, 21))
+        u6 = User(name='Lamine Yamal', uid='yamal', email="123@123.com", dob=datetime(1921, 10, 21))
 
 
         users = [u1, u2, u3, u4, u5, u6]

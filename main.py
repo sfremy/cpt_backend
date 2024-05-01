@@ -142,7 +142,7 @@ def read():
 # read()
         
 # create()                
-# initUsers()
+initUsers()
 # initColleges()
 
 

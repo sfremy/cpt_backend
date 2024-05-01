@@ -14,7 +14,7 @@
 ## Backend:
 - DELETE function in `user.py` API file: I created the college delete function under the edit endpoint in the API. This uses the DELETE method along with sequencing, selection, and iteration to go through the user's original college list, recognize the user-entered list of colleges to delete, and delete specific colleges from the original list.
 - `datamodel.py`: This code defines a data model class with methods for training a logistic regression model, making predictions, creating new data entries, reading data, updating data, and deleting data entries.
-- `student_admission_dataset.csv`: This contains the college data for my machine learning program.
+- `student_admission_dataset.csv`: This contains the college data for my machine learning program. I will include a small screenshot of the beginning of the dataset so as to not use too many pages to display the entire dataset.
 
 ## Frontend:
 - `website_login.html`: This file includes the simple HTML layout and the core JavaScript code for the login function that uses the POST method in the frontend under `/api/users/authenticate`.

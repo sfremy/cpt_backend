@@ -25,8 +25,3 @@ class datamodel:
         
     def delete(self, index):
         self.data.drop(index, inplace=True)
-    
-    
-# Model=datamodel()# sample class thing
-# Model.exportmodel()
-# print(Model.predict(4.0,1600,8))# sample Prediction

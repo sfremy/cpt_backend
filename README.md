@@ -1,3 +1,44 @@
+# Project Description
+- This project is a college application tracker called "CollegeApp Scout" that helps students choose colleges for their list and track each application to help with better organization in the already tedious process of college applications. By working on this project, I gained valuable information on backend and frontend development and connectivity, along with creating machine learning algorithms to predict college admission decisions.
+
+- Students can create accounts and login with the same account credentials. This is done in order to allow independent tracking of college applications, creating a highly personalized experience. The creation of the account is done using a POST method in the API endpoint `/api/users`. These credentials are stored in the backend in an SQLite database, and are fetched using the GET method under the same endpoint.
+
+- Upon logging in, the student is redirected to the MyScout page. Here, the student can add their initial colleges to the list. They can always add further colleges to their list in the future. Both of these features work using a PUT method under the API endpint `/api/users/edit`. There is also a college delete feature, where the user can delete specific colleges from the list. This is done using a DELETE method under the edit endpoint. 
+
+- <strong>IMPORTANT</strong>: The colleges are saved as a list, and are fetched using this code line: `json.loads(user.college_list)`. This list is saved in the SQLite database, and is unique to each user. The third screenshot in the Personal Project Reference includes this code. While the college list might not be visible due to being stored in an SQLite database, it is being fetched in the backend and frontend nonetheless. An image of the SQLite database will be included later in the document.
+
+- This project includes a machine learning feature that uses a linear regression model to predict the student's admission decision based on user-entered data such as their SAT score, GPA, and the number of extracurriculars. The dataset used is representative of the most competitive American universities, and is stored in a `.csv` file in the backend.
+
+# Files/features I created
+
+## Backend:
+- DELETE function in `user.py` API file: I created the college delete function under the edit endpoint in the API. This uses the DELETE method along with sequencing, selection, and iteration to go through the user's original college list, recognize the user-entered list of colleges to delete, and delete specific colleges from the original list.
+- `datamodel.py`: This code defines a data model class with methods for training a logistic regression model, making predictions, creating new data entries, reading data, updating data, and deleting data entries.
+- `student_admission_dataset.csv`: This contains the college data for my machine learning program.
+
+## Frontend:
+- `website_login.html`: This file includes the simple HTML layout and the core JavaScript code for the login function that uses the POST method in the frontend under `/api/users/authenticate`.
+- `2024-02-08-signUp.md`: This file includes the simple HTML layout for the sign up feature along with the core JavaScript code that uses the POST method in the frontend under `/api/users`.
+- `config.js`: This creates globally defined variables for the root of the API URL, allowing for simplicity when fetching endpoints anywhere across the frontend.
+
+# Files/features I modified or worked collaboratively on
+
+## Backend:
+- `user.py`: I created the delete colleges feature along with assisting with debugging for the PUT method under the edit endpoint.
+- `sqlite.db`: Found under the relative URL `instance/sqlite.db`, this includes all the data for the project, including user login credentials, college lists, and the college list items themsevels (Harvard University, MIT, etc.). Every function that reads and commits data stores it in this file.
+- `users.py`: In this model file, I integrated additional schema to the SQLite database, `_email` and `_college_list` being major ones.
+- `main.py`: The only change I made here was the port number and the initialized data.
+
+# Template code
+Our teacher provided use with template code for the login and sign up feature, along with other core backend files. The list below contains all the files that include program code. Some of these files have been modified by our group according to the project requirements, while others have been left completey untouched:
+- `user.py`: The login and sign up code under `class UserAPI` and `class _Security` were provided by the teacher.
+- `main.py`: The majority of the code was provided by the teacher. Only the port number, initialized data, and college data was added by the group.
+- `users.py`: The majority of the model code was provided by the teacher. Only schema changed were made.
+- `auth_middleware.py`: The entire file was provided by the teacher. The file relates to the login feature.
+- Other docker related files.
+
+
+### Everything after this point is information provided by the teacher by default for the template repository
 # Flask Portfolio Starter
 
 Use this project to create a Flask Servr.

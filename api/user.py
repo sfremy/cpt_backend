@@ -155,7 +155,8 @@ class UserAPI:
         }
             
         # NEW STUFF - DELETE COLLEGES FROM LIST
-    
+
+        @token_required # In order to access current_user that required authentication
         def delete(current_user): # To delete colleges from the list
             # Extract data from the request's JSON body
             body = request.get_json()

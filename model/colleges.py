@@ -57,7 +57,7 @@ class College(db.Model):
     def tuition(self): 
         return self._tuition
         
-    @image.setter #tuition setter
+    @tuition.setter #tuition setter
     def image(self, tuition):
         self._tuition = tuition
 

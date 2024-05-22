@@ -10,6 +10,9 @@ from werkzeug.security import generate_password_hash, check_password_hash
 #This material was based on a template provided by our teacher.
 class College(db.Model):
     __tablename__ = 'colleges'  # table name is plural, class name is singular
+    
+    
+#NEW DATA COLUMNS - Tuition, student count, student-faculty ratio, safety score 
 
     # Define the Player schema with "vars" from object
     id = db.Column(db.Integer, primary_key=True)

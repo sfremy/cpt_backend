@@ -20,12 +20,14 @@ class College(db.Model):
     _link = db.Column(db.String(255), unique=False, nullable=True)
     _image = db.Column(db.String(255), unique=False, nullable=True)
     _tuition = db.Column(db.String(255), unique=False, nullable=True)
+    _studentCount = db.Column(db.String(255), unique=False, nullable=True)
     
-    def __init__(self, name, link, image, tuition):
+    def __init__(self, name, link, image, tuition, studentCount):
         self._name = name    # variables with self prefix become part of the object, 
         self._link = link
         self._image = image
         self._tuition = tuition
+        self._studentCount = studentCount
 
     # a name getter method, extracts name from object
     @property
@@ -61,6 +63,14 @@ class College(db.Model):
     def image(self, tuition):
         self._tuition = tuition
 
+    @property #studentCount property
+    def studentCount(self): 
+        return self._studentCount
+        
+    @_studentCount.setter #studentCount setter
+    def image(self, studentCount):
+        self._studentCount = studentCount
+
     # output content using str(object) in human readable form, uses getter
     # output content using json dumps, this is ready for API response
     def __str__(self):
@@ -86,7 +96,8 @@ class College(db.Model):
             "name": self.name,
             "link": self.link,
             "image": self.image,
-            "tuition": self.tuition
+            "tuition": self.tuition,
+            "studentCount": self.studentCount
         }
 
     # CRUD update: updates name, uid, password, tokens
@@ -102,6 +113,8 @@ class College(db.Model):
                 self.image = dictionary[key]
             if key == "tuition":
                 self.tuition = dictionary[key]
+            if key == "studentCount":
+                self.studentCount = dictionary[key]
         db.session.commit()
         return self
 
@@ -117,17 +130,17 @@ class College(db.Model):
 def initColleges():
     with app.app_context():
         db.create_all()
-        c1 = College(name='Stanford University',link='https://admission.stanford.edu/apply/',image='https://identity.stanford.edu/wp-content/uploads/sites/3/2020/07/block-s-right.png', tuition='82,162')
-        c2 = College(name='Harvard University',link='https://college.harvard.edu/admissions/apply',image='https://1000logos.net/wp-content/uploads/2017/02/Harvard-Logo.png', tuition='83,538')
-        c3 = College(name='MIT',link='https://apply.mitadmissions.org/portal/apply',image='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/MIT_logo.svg/2560px-MIT_logo.svg.png', tuition='79,850')
-        c4 = College(name='Georgia Tech',link='https://admission.gatech.edu/apply/',image='https://brand.gatech.edu/sites/default/files/inline-images/GTVertical_RGB.png', tuition='28,106')
-        c5 = College(name='Duke University',link='https://admissions.duke.edu/apply/',image='https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Duke_Blue_Devils_logo.svg/909px-Duke_Blue_Devils_logo.svg.png', tuition='62,688')
-        c6 = College(name='Yale University',link='https://www.yale.edu/admissions',image='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Yale_University_logo.svg/2560px-Yale_University_logo.svg.png', tuition='85,120')
-        c7 = College(name='Princeton University',link='https://admission.princeton.edu/apply',image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Princeton_seal.svg/1200px-Princeton_seal.svg.png', tuition='80,415')
-        c8 = College(name='Columbia University',link='https://undergrad.admissions.columbia.edu/apply',image='https://admissions.ucr.edu/sites/default/files/styles/form_preview/public/2020-07/ucr-education-logo-columbia-university.png?itok=-0FD6Ma2', tuition='86,097')
-        c9 = College(name='University of Chicago',link='https://collegeadmissions.uchicago.edu/apply',image='https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chicago_Coat_of_arms.png', tuition='86,856')
-        c10 = College(name='UC Berkeley',link='https://admissions.berkeley.edu/apply-to-berkeley/',image='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Seal_of_University_of_California%2C_Berkeley.svg/1200px-Seal_of_University_of_California%2C_Berkeley.svg.png', tuition='43,043')
-        c11 = College(name='UCLA',link='https://admission.ucla.edu/apply',image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/UCLA_Bruins_primary_logo.svg/1200px-UCLA_Bruins_primary_logo.svg.png', tuition='36,980')
+        c1 = College(name='Stanford University',link='https://admission.stanford.edu/apply/',image='https://identity.stanford.edu/wp-content/uploads/sites/3/2020/07/block-s-right.png', tuition='82,162', studentCount='16,914')
+        c2 = College(name='Harvard University',link='https://college.harvard.edu/admissions/apply',image='https://1000logos.net/wp-content/uploads/2017/02/Harvard-Logo.png', tuition='83,538', studentCount='22,947')
+        c3 = College(name='MIT',link='https://apply.mitadmissions.org/portal/apply',image='https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/MIT_logo.svg/2560px-MIT_logo.svg.png', tuition='79,850', studentCount='11,376')
+        c4 = College(name='Georgia Tech',link='https://admission.gatech.edu/apply/',image='https://brand.gatech.edu/sites/default/files/inline-images/GTVertical_RGB.png', tuition='28,106', studentCount='45,296')
+        c5 = College(name='Duke University',link='https://admissions.duke.edu/apply/',image='https://upload.wikimedia.org/wikipedia/commons/thumb/0/04/Duke_Blue_Devils_logo.svg/909px-Duke_Blue_Devils_logo.svg.png', tuition='62,688', studentCount='18,000')
+        c6 = College(name='Yale University',link='https://www.yale.edu/admissions',image='https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Yale_University_logo.svg/2560px-Yale_University_logo.svg.png', tuition='85,120', studentCount='14,776')
+        c7 = College(name='Princeton University',link='https://admission.princeton.edu/apply',image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Princeton_seal.svg/1200px-Princeton_seal.svg.png', tuition='80,415', studentCount='5,590')
+        c8 = College(name='Columbia University',link='https://undergrad.admissions.columbia.edu/apply',image='https://admissions.ucr.edu/sites/default/files/styles/form_preview/public/2020-07/ucr-education-logo-columbia-university.png?itok=-0FD6Ma2', tuition='86,097', studentCount='36,650')
+        c9 = College(name='University of Chicago',link='https://collegeadmissions.uchicago.edu/apply',image='https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chicago_Coat_of_arms.png', tuition='86,856', studentCount='14,467')
+        c10 = College(name='UC Berkeley',link='https://admissions.berkeley.edu/apply-to-berkeley/',image='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Seal_of_University_of_California%2C_Berkeley.svg/1200px-Seal_of_University_of_California%2C_Berkeley.svg.png', tuition='43,043', studentCount='45,060')
+        c11 = College(name='UCLA',link='https://admission.ucla.edu/apply',image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/UCLA_Bruins_primary_logo.svg/1200px-UCLA_Bruins_primary_logo.svg.png', tuition='36,980', studentCount='65,282')
         #Add new data to this line
         colleges = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11]
         """Builds sample user/note(s) data"""

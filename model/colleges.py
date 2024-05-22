@@ -16,7 +16,7 @@ class College(db.Model):
 
     # Define the Player schema with "vars" from object
     id = db.Column(db.Integer, primary_key=True)
-    _name = db.Column(db.String(255), unique=False, nullable=True)
+    _name = db.Column(db.String(255), unique=True, nullable=True)
     _link = db.Column(db.String(255), unique=False, nullable=True)
     _image = db.Column(db.String(255), unique=False, nullable=True)
     _tuition = db.Column(db.String(255), unique=False, nullable=True)
@@ -67,7 +67,7 @@ class College(db.Model):
     def studentCount(self): 
         return self._studentCount
         
-    @_studentCount.setter #studentCount setter
+    @studentCount.setter #studentCount setter
     def image(self, studentCount):
         self._studentCount = studentCount
 

@@ -193,7 +193,6 @@ class UserAPI:
 
             return {'message': 'Colleges deleted successfully'}, 200
 
-
     class _Security(Resource):
         def post(self):
             try:
@@ -254,7 +253,8 @@ class UserAPI:
                     "data": None
                 }, 400
                 
-    class Prediction(Resource):
+    class _Prediction(Resource):
+        #Ankit's model file
         def post(self):
             try:
                 body = request.get_json()
@@ -274,8 +274,12 @@ class UserAPI:
                     "data": None
                 }, 500
                 
+        # Order database entries based on weighted match
+        def get(self):
+            body = request.get_json()
+                
 
     api.add_resource(_CRUD, '/')
     api.add_resource(_Security, '/authenticate')
     api.add_resource(_Edit, '/edit')
-    api.add_resource(Prediction, '/Prediction')
+    api.add_resource(_Prediction, '/Prediction')

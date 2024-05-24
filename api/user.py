@@ -284,11 +284,14 @@ class UserAPI:
         def get(self):
             body = request.get_json()
             
-            for attribute in body.items():
+            comp_matrix = []
+            for attribute, value in body.items():
                 # Get the column attribute dynamically
                 column_attr = getattr(College, attribute)
                 # Fetch the column values
                 column_values = np.array([getattr(college, attribute) for college in db.session.query(column_attr).all()])
+                # value[0] is the user-provided value, value[1] is the weighting
+                z_row = (np.square(column_values - value[0]) / value[0]) * value[1]
                 
                 
     api.add_resource(_CRUD, '/')

@@ -49,8 +49,6 @@ def initUsers():
                 '''fails with bad or duplicate data'''
                 print(f"Records exist uid {user.uid}, or error.")
 
-        initColleges()
-
 # SQLAlchemy extracts single user from database matching User ID
 def find_by_uid(uid):
     with app.app_context():
@@ -117,27 +115,7 @@ def read():
         
 # create()                
 initUsers()
-# initColleges()
-
-
-# resp.set_cookie(
-#     "jwt",
-#     token,
-#     max_age=3600,
-#     secure=True,
-#     httponly=True,
-#     path='/',
-#     samesite='None'
-# )
-
-# if ($request_method = OPTIONS) {
-#     add_header "Access-Control-Allow-Credentials" "true" always;
-#     add_header "Access-Control-Allow-Origin"  "https://nighthawkcoders.github.io" always;
-#     add_header "Access-Control-Allow-Methods" "GET, POST, PUT, OPTIONS, HEAD" always;
-#     add_header "Access-Control-Allow-MaxAge" 600 always;
-#     add_header "Access-Control-Allow-Headers" "Authorization, Origin, X-Requested-With, Content-Type, Accept" always;
-#     return 204;
-# }
+initColleges()
 
 if __name__ == "__main__":
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///./volumes/sqlite.db"

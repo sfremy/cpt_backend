@@ -284,7 +284,9 @@ class UserAPI:
         def get(self):
             body = request.get_json()
             
-            comp_matrix = []
+            #WIP LINE - get dimensions of array through body & sqlite query
+            comp_matrix = np.empty()
+            
             for attribute, value in body.items():
                 # Get the column attribute dynamically
                 column_attr = getattr(College, attribute)
@@ -293,6 +295,7 @@ class UserAPI:
                 # value[0] is the user-provided value, value[1] is the weighting
                 z_row = (np.square(column_values - value[0]) / value[0]) * value[1]
                 
+                #WIP LINE - change z_rows line to assign to extant indices
                 
     api.add_resource(_CRUD, '/')
     api.add_resource(_Security, '/authenticate')

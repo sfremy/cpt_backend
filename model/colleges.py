@@ -1,11 +1,6 @@
-from random import randrange
-from datetime import date
-import os, base64
 import json
-
 from __init__ import app, db
 from sqlalchemy.exc import IntegrityError
-from werkzeug.security import generate_password_hash, check_password_hash
 
 #This material was based on a template provided by our teacher.
 class College(db.Model):

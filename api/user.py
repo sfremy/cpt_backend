@@ -10,6 +10,7 @@ from datamodel import datamodel
 import json
 from flask_cors import CORS
 import pandas as pd
+from __init__ import db
 
 user_api = Blueprint('user_api', __name__, url_prefix='/api/users')
 api = Api(user_api)
@@ -278,9 +279,14 @@ class UserAPI:
         # Order database entries based on weighted match
         def get(self):
             body = request.get_json()
-            for attribute, value in body.items():
-                print(attribute)
-                print(value)
+            for attribute in body.items():
+                # Get the column attribute dynamically
+                column_attr = getattr(College, attribute)
+                # Fetch the column values
+                column_values = [getattr(college, attribute) for college in db.session.query(column_attr).all()]
+                
+                
+
             
                 
 

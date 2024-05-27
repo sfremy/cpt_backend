@@ -14,11 +14,11 @@ class College(db.Model):
     _name = db.Column(db.String(255), unique=True, nullable=True)
     _link = db.Column(db.String(255), unique=False, nullable=True)
     _image = db.Column(db.String(255), unique=False, nullable=True)
-    _tuition = db.Column(db.String(255), unique=False, nullable=True)
-    _studentCount = db.Column(db.String(255), unique=False, nullable=True)
-    _studentFaculty = db.Column(db.String(255), unique=False, nullable=True)
-    _safetyscore = db.Column(db.String(255), unique=False, nullable=True)
-    _graduationrate = db.Column(db.String(255), unique=False, nullable=True)
+    _tuition = db.Column(db.Integer, unique=False, nullable=True)
+    _studentCount = db.Column(db.Integer, unique=False, nullable=True)
+    _studentFaculty = db.Column(db.Integer, unique=False, nullable=True)
+    _safetyscore = db.Column(db.Float, unique=False, nullable=True)
+    _graduationrate = db.Column(db.Float, unique=False, nullable=True)
 
     def __init__(self, name, link, image, tuition, studentCount, studentFaculty, safetyScore, graduationrate):
         self._name = name    # variables with self prefix become part of the object, 

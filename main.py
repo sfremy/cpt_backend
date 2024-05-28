@@ -4,7 +4,7 @@ from flask_cors import CORS
 from __init__ import app, db
 
 from api.user2 import user_api
-from model.users2 import initUsers2
+from model.users2 import User2, initUsers2
 from model.colleges import initColleges
 
 # Create CORS instance before registering blueprint
@@ -80,7 +80,7 @@ def create():
 # SQLAlchemy extracts all users from database, turns each user into JSON
 def read():
     with app.app_context():
-        table = User.query.all()
+        table = User2.query.all()
     json_ready = [user.read() for user in table] # "List Comprehensions", for each user add user.read() to list
     return json_ready
 

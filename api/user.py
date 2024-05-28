@@ -279,13 +279,18 @@ class UserAPI:
         # Order database entries based on weighted match
         def get(self):
             body = request.get_json()
-            for attribute in body.items():
+            z_matrix = np.array([])
+            
+            for attribute, value in body.items():
                 # Get the column attribute dynamically
                 column_attr = getattr(College, attribute)
                 # Fetch the column values
-                column_values = [getattr(college, attribute) for college in db.session.query(column_attr).all()]
-                
-
+                column_values = np.array([getattr(college, attribute) for college in db.session.query(column_attr).all()])
+                # value[0] is the user-provided value, value[1] is the weighting
+                z_row = (((column_values - value[0])**2)/value[0])*value[1]
+                z_matrix = np.vstack([z_matrix, z_row]) if z_matrix.size else z_row
+            
+            print(z_matrix)
 
 
                 

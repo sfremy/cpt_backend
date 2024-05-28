@@ -181,8 +181,12 @@ def initColleges():
         c9 = College(name='University of Chicago',link='https://collegeadmissions.uchicago.edu/apply',image='https://upload.wikimedia.org/wikipedia/commons/c/cd/University_of_Chicago_Coat_of_arms.png', tuition='86,856', studentCount='14,467', studentFaculty='5:1', safetyScore='1.57%', graduationrate='.95')
         c10 = College(name='UC Berkeley',link='https://admissions.berkeley.edu/apply-to-berkeley/',image='https://upload.wikimedia.org/wikipedia/commons/thumb/a/a1/Seal_of_University_of_California%2C_Berkeley.svg/1200px-Seal_of_University_of_California%2C_Berkeley.svg.png', tuition='43,043', studentCount='45,060', studentFaculty='19:1', safetyScore='1.34%', graduationrate='.93')
         c11 = College(name='UCLA',link='https://admission.ucla.edu/apply',image='https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/UCLA_Bruins_primary_logo.svg/1200px-UCLA_Bruins_primary_logo.svg.png', tuition='36,980', studentCount='65,282', studentFaculty='19:1', safetyScore='1.16%', graduationrate='.92')
+        c12 = College(name='Cornell University', link='https://admissions.cornell.edu/apply', image='https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/Cornell_University_seal.svg/1200px-Cornell_University_seal.svg.png', tuition='80,287', studentCount='23,620', studentFaculty='9:1', safetyScore='1.50%', graduationrate='.93')
+        c13 = College(name='University of Pennsylvania', link='https://admissions.upenn.edu/admissions-and-financial-aid', image='https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/University_of_Pennsylvania_seal.svg/1200px-University_of_Pennsylvania_seal.svg.png', tuition='85,738', studentCount='22,432', studentFaculty='6:1', safetyScore='1.20%', graduationrate='.95')
+        c14 = College(name='California Institute of Technology (Caltech)', link='https://www.admissions.caltech.edu/apply', image='https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Caltech_seal.svg/1200px-Caltech_seal.svg.png', tuition='79,947', studentCount='2,240', studentFaculty='3:1', safetyScore='0.70%', graduationrate='.94')
+
         #Add new data to this line
-        colleges = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11]
+        colleges = [c1, c2, c3, c4, c5, c6, c7, c8, c9, c10, c11, c12, c13, c14]
         """Builds sample user/note(s) data"""
         for college in colleges:
             try:

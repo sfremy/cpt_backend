@@ -102,7 +102,6 @@ class UserAPI:
             
             # Convert the query results to a JSON-serializable format
             colleges_data = [college.read() for college in matching_colleges]
-            print(colleges_data)
             json_data = jsonify(colleges_data)
             
             return json_data  # Return the JSON data of the colleges
@@ -122,20 +121,11 @@ class UserAPI:
         # Extract data from the request's JSON body
             body = request.get_json()
             
-            # Print request data for debugging
-            print("Request Data:", body)
-            
             # Retrieve the user's ID
             user_id = body.get('id')
             
-            # DEBUG
-            print("User ID:", user_id)
-            
             # Query the database for the user's record
             user = User.query.filter_by(_uid=user_id).first()
-            
-            # DEBUG
-            print("User:", user)
             
             if user is None:
                 return {'message': "User ID not found"}, 404
@@ -145,8 +135,6 @@ class UserAPI:
             
             # Decode the JSON string of the user's current college list into a Python list
             namelist = ast.literal_eval(user.college_list)
-            
-            print("Existing College List:", namelist) # DEBUG
             
             # Update the user's college list by adding new names, avoiding duplicates
             namelist += [college for college in selected_colleges if college not in namelist]
@@ -161,12 +149,10 @@ class UserAPI:
             }, 200
             
         # NEW STUFF - DELETE COLLEGES FROM LIST
-
-        @token_required # In order to access current_user that required authentication
-        def delete(current_user): # To delete colleges from the list
+        def delete(self): # To delete colleges from the list
             # Extract data from the request's JSON body
             body = request.get_json()
-                    
+            print(body)        
             # Retrieve the user's ID
             username = body.get('id')
                         
@@ -182,6 +168,8 @@ class UserAPI:
             # selected_colleges = body.get('college_list', [])
             selected_colleges = json.loads(user.college_list)
             colleges_to_delete = body.get('college_list')
+            print(selected_colleges)
+            print(colleges_to_delete)
                     
             if not colleges_to_delete:
                 return {'message': 'No colleges to delete provided'}, 400
@@ -191,6 +179,7 @@ class UserAPI:
                 if college_to_delete in selected_colleges:
                     selected_colleges.remove(college_to_delete)
 
+            print(selected_colleges)
             # Update the user's record in the database with the updated selection list
             user.update(college_list=json.dumps(selected_colleges))
 
@@ -306,7 +295,7 @@ class UserAPI:
                 
                 return jsonify(sort_final)
             except Exception as e:
-                    print("Sortin error:", str(e))  # Log the error
+                    print("Sorting error:", str(e))  # Log the error
                     return {
                         "message": "Something went wrong during matching.",
                         "error": str(e),

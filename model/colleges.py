@@ -61,7 +61,7 @@ class College(db.Model):
         return self._tuition
         
     @tuition.setter #tuition setter
-    def image(self, tuition):
+    def tuition(self, tuition):
         self._tuition = tuition
 
     @property #studentCount property
@@ -69,7 +69,7 @@ class College(db.Model):
         return self._studentCount
         
     @studentCount.setter #studentCount setter
-    def image(self, studentCount):
+    def studentCount(self, studentCount):
         self._studentCount = studentCount
         
     @property #studentFaculty property

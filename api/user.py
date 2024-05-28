@@ -303,7 +303,6 @@ class UserAPI:
                 #Sort names & report matches
                 unsorted = dict(zip(names,z_list))
                 sort_final = dict(sorted(unsorted.items(), key=lambda x:x[1]))
-                print(sort_final)
                 
                 return jsonify(sort_final)
             except Exception as e:

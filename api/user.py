@@ -260,7 +260,6 @@ class UserAPI:
                 }, 400
                 
     class _Prediction(Resource):
-        #Ankit's model file
         def post(self):
             try:
                 body = request.get_json()
@@ -284,17 +283,36 @@ class UserAPI:
         def get(self):
             body = request.get_json()
             z_matrix = np.array([])
-            
-            for attribute, value in body.items():
-                # Get the column attribute dynamically
-                column_attr = getattr(College, attribute)
-                # Fetch the column values
-                column_values = np.array([getattr(college, attribute) for college in db.session.query(column_attr).all()])
-                # value[0] is the user-provided value, value[1] is the weighting
-                z_row = (((column_values - value[0])**2)/value[0])*value[1]
-                z_matrix = np.vstack([z_matrix, z_row]) if z_matrix.size else z_row
-            
-            print(z_matrix)
+            value_sum = 0
+            try:
+                for attribute, value in body.items():
+                    # Get the column attribute dynamically
+                    column_attr = getattr(College, attribute)
+                    # Fetch the column values
+                    column_values = np.array([getattr(college, attribute) for college in db.session.query(column_attr).all()])
+                    # value[0] is the user-provided value, value[1] is the weighting
+                    z_row = (abs((column_values - value[0]))/value[0])*value[1]
+                    z_matrix = np.vstack([z_matrix, z_row]) if z_matrix.size else z_row
+                    value_sum += value[1]
+                
+                #Sum weighted deviations for all colleges
+                column = getattr(College, '_name')
+                names = np.array([getattr(college, '_name') for college in db.session.query(column).all()])
+                z_list = z_matrix.sum(axis=0)/value_sum
+                
+                #Sort names & report matches
+                unsorted = dict(zip(names,z_list))
+                sort_final = dict(sorted(unsorted.items(), key=lambda x:x[1]))
+                print(sort_final)
+                
+                return jsonify(sort_final)
+            except Exception as e:
+                    print("Sortin error:", str(e))  # Log the error
+                    return {
+                        "message": "Something went wrong during matching.",
+                        "error": str(e),
+                        "data": None
+                    }, 500
 
 
                 

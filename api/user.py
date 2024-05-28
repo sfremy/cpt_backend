@@ -168,7 +168,7 @@ class UserAPI:
             body = request.get_json()
                     
             # Retrieve the user's ID
-            username = body.get('name')
+            username = body.get('id')
                         
             if username is None:
                 return {'message': 'Invalid request'}, 400
@@ -181,7 +181,7 @@ class UserAPI:
             
             # selected_colleges = body.get('college_list', [])
             selected_colleges = json.loads(user.college_list)
-            colleges_to_delete = body.get('names')
+            colleges_to_delete = body.get('college_list')
                     
             if not colleges_to_delete:
                 return {'message': 'No colleges to delete provided'}, 400
@@ -195,7 +195,7 @@ class UserAPI:
             user.update(college_list=json.dumps(selected_colleges))
 
             # Commit changes to the database
-            # db.session.commit()
+            db.session.commit()
 
             return {'message': 'Colleges deleted successfully'}, 200
 

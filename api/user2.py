@@ -11,7 +11,7 @@ from flask_cors import CORS
 from flask_restful import Api, Resource
 from datamodel import datamodel
 
-from model.users import User
+from model.users2 import User2
 from model.colleges import College
 from auth_middleware import token_required
 from __init__ import db
@@ -22,7 +22,7 @@ api = Api(user_api)
 app = Flask(__name__)
 CORS(app, origins="*")
 
-class UserAPI:
+class User2API:
     class _CRUD(Resource):
         def post(self):  # Removed current_user
             body = request.get_json()
@@ -40,7 +40,7 @@ class UserAPI:
             dob = body.get('dob')
             email = body.get('email')
 
-            uo = User(name=name, uid=uid, email=email)
+            uo = User2(name=name, uid=uid, email=email)
 
             if password is not None:
                 uo.set_password(password)
@@ -61,7 +61,7 @@ class UserAPI:
 
         @token_required
         def get(self, current_user):  # Read method
-            users = User.query.all()  # read/extract all users from database
+            users = User2.query.all()  # read/extract all users from database
             json_ready = [user.read() for user in users]  # prepare output in json
             return jsonify(json_ready)  # jsonify creates Flask response object, more specific to APIs than json.dumps
 
@@ -69,7 +69,7 @@ class UserAPI:
         def delete(self, current_user):
             body = request.get_json()
             uid = body.get('uid')
-            users = User.query.all()
+            users = User2.query.all()
 
             for user in users:
                 if user.uid == uid:
@@ -89,7 +89,7 @@ class UserAPI:
                 return {'message': 'Invalid request'}, 400
             
             # Query the database for the user's record using the user ID
-            user = User.query.filter_by(_uid=username).first()
+            user = User2.query.filter_by(_uid=username).first()
             
             if user is None:
                 return {'message': "User ID not found"}, 404
@@ -125,7 +125,7 @@ class UserAPI:
             user_id = body.get('id')
             
             # Query the database for the user's record
-            user = User.query.filter_by(_uid=user_id).first()
+            user = User2.query.filter_by(_uid=user_id).first()
             
             if user is None:
                 return {'message': "User ID not found"}, 404
@@ -160,7 +160,7 @@ class UserAPI:
                 return {'message': 'Invalid request'}, 400
                         
             # Query the database for the user's record using the user ID
-            user = User.query.filter_by(_uid=username).first()
+            user = User2.query.filter_by(_uid=username).first()
                         
             if user is None:
                 return {'message': "User ID not found"}, 404
@@ -207,7 +207,7 @@ class UserAPI:
                 password = body.get('password')
 
                 ''' Find user '''
-                user = User.query.filter_by(_uid=uid).first()
+                user = User2.query.filter_by(_uid=uid).first()
                 if user is None or not user.is_password(password):
                     return {'message': f"Invalid user id or password"}, 400
                 if user:

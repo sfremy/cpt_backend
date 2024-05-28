@@ -5,9 +5,9 @@ import json
 
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
-from __init__ import db
+from __init__ import app, db
 
-class User(db.Model):
+class User2(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -132,4 +132,30 @@ class User(db.Model):
         db.session.delete(self)
         db.session.commit()
         return None
+    
+# Builds working data for testing
+def initUsers2():
+    with app.app_context():
+        """Create database and tables"""
+        db.create_all()
+        """Tester data for table"""
+        u1 = User2(name='Lionel Messi', uid='lmessi', email="123@123.com", password='goat', dob=datetime(1847, 2, 11),college_list='[\'Stanford University\', \'MIT\']')
+        u2 = User2(name='Cristiano Ronaldo', uid='cr7', email="123@123.com", password='123cr7')
+        u3 = User2(name='Kevin De Bruyne', uid='kdb', email="123@123.com", password='123kdb')
+        u4 = User2(name='Phil Foden', uid='foden', email="123@123.com", password='123foden')
+        u5 = User2(name='Rodrigo Hernández', uid='rodri', email="123@123.com", dob=datetime(1920, 10, 21))
+        u6 = User2(name='Lamine Yamal', uid='yamal', email="123@123.com", dob=datetime(1921, 10, 21))
+
+
+        users = [u1, u2, u3, u4, u5, u6]
+
+        """Builds sample user/note(s) data"""
+        for user in users:
+            try:
+                '''add user to table'''
+                object = user.create()
+                print(f"Created new uid {object.uid}")
+            except:  # error raised if object nit created
+                '''fails with bad or duplicate data'''
+                print(f"Records exist uid {user.uid}, or error.")
     

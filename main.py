@@ -25,7 +25,7 @@ def before_request():
 # SQLAlchemy extracts single user from database matching User ID
 def find_by_uid(uid):
     with app.app_context():
-        user = User.query.filter_by(_uid=uid).first()
+        user = User2.query.filter_by(_uid=uid).first()
     return user # returns user object
 
 # Check credentials by finding user and verify password
@@ -55,7 +55,7 @@ def create():
     email = input("Enter your email:")
     
     # Initialize User object before date
-    user = User(name=name, 
+    user = User2(name=name, 
                 uid=uid, 
                 password=password,
                 email=email)

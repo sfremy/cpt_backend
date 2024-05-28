@@ -16,7 +16,7 @@ from model.colleges import College
 from auth_middleware import token_required
 from __init__ import db
 
-user_api = Blueprint('user_api', __name__, url_prefix='/api/users')
+user_api = Blueprint('user_api', __name__, url_prefix='/api/users2')
 api = Api(user_api)
 
 app = Flask(__name__)
@@ -269,10 +269,10 @@ class User2API:
                 }, 500
                 
         # Order database entries based on weighted match
-        def get(self):
+        def put(self):
             body = request.get_json()
+            
             z_matrix = np.array([])
-            value_sum = 0
             try:
                 for attribute, value in body.items():
                     # Get the column attribute dynamically
@@ -282,18 +282,16 @@ class User2API:
                     # value[0] is the user-provided value, value[1] is the weighting
                     z_row = (abs((column_values - value[0]))/value[0])*value[1]
                     z_matrix = np.vstack([z_matrix, z_row]) if z_matrix.size else z_row
-                    value_sum += value[1]
                 
                 #Sum weighted deviations for all colleges
                 column = getattr(College, '_name')
                 names = np.array([getattr(college, '_name') for college in db.session.query(column).all()])
-                z_list = z_matrix.sum(axis=0)/value_sum
+                z_list = z_matrix.sum(axis=0)
                 
                 #Sort names & report matches
-                unsorted = dict(zip(names,z_list))
-                sort_final = dict(sorted(unsorted.items(), key=lambda x:x[1]))
-                
-                return jsonify(sort_final)
+                final = dict(zip(names,z_list))
+                print(final)
+                return jsonify(final)
             except Exception as e:
                     print("Sorting error:", str(e))  # Log the error
                     return {

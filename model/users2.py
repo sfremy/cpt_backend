@@ -8,7 +8,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from __init__ import app, db
 
 class User2(db.Model):
-    __tablename__ = 'users'
+    __tablename__ = 'users2'
 
     id = db.Column(db.Integer, primary_key=True)
     _name = db.Column(db.String(255), unique=False, nullable=False)

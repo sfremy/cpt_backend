@@ -16,8 +16,8 @@ from model.colleges import College
 from auth_middleware import token_required
 from __init__ import db
 
-user_api = Blueprint('user_api', __name__, url_prefix='/api/users2')
-api = Api(user_api)
+user2_api = Blueprint('user2_api', __name__, url_prefix='/api/users2')
+api = Api(user2_api)
 
 app = Flask(__name__)
 CORS(app, origins="*")

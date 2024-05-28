@@ -3,7 +3,7 @@ from flask import request
 from flask_cors import CORS
 from __init__ import app, db
 
-from api.user2 import user_api
+from api.user2 import user2_api
 from model.users2 import User2, initUsers2
 from model.colleges import initColleges
 
@@ -11,7 +11,7 @@ from model.colleges import initColleges
 cors = CORS(app, supports_credentials=True)
 
 # Register blueprint
-app.register_blueprint(user_api)
+app.register_blueprint(user2_api)
 
 # Flag to ensure initialization only happens once
 # initialized = False

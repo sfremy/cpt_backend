@@ -1,15 +1,19 @@
+import json
+import ast
 import jwt
+
+import pandas as pd
+import numpy as np
+
+from datetime import datetime
+from flask import Flask, Blueprint, request, jsonify, current_app, Response, session
+from flask_cors import CORS
+from flask_restful import Api, Resource
+from datamodel import datamodel
+
 from model.users import User
 from model.colleges import College
-from flask import Flask, Blueprint, request, jsonify, current_app, Response, session
-from flask_restful import Api, Resource
-from datetime import datetime
 from auth_middleware import token_required
-import ast
-from datamodel import datamodel
-import json
-from flask_cors import CORS
-import pandas as pd
 from __init__ import db
 
 user_api = Blueprint('user_api', __name__, url_prefix='/api/users')
